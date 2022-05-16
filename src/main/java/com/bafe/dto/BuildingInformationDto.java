@@ -1,0 +1,24 @@
+package com.bafe.dto;
+
+import com.bafe.model.Building;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BuildingInformationDto {
+
+    private String name;
+    private Boolean status;
+
+    public BuildingInformationDto(Building building) {
+        this.status = building.getStatus();
+        this.name = building.getName();
+
+    }
+
+
+}
