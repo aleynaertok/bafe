@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class BuildingInformationDto {
 
     private String name;
-    private Boolean status;
+    private String status;
 
     public BuildingInformationDto(Building building) {
         this.status = building.getStatus();

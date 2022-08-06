@@ -17,7 +17,7 @@ public class Building extends BaseEntity{
     private String name;
     @Column(name = "floor_Number")
     private int floorNumber;
-    private Boolean status;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "account_id")

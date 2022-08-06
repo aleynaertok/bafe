@@ -21,52 +21,14 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-   /* @GetMapping
-    public ResponseEntity<List<AccountDto>> getAllAccounts(){
-
-        return ResponseEntity.ok(acc)
-
-    }
-
-    */
 
     @PostMapping
     public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto) {
 
         return ResponseEntity.ok(accountService.createAccount(accountDto));
 
-      /*  try{
-
-            return new ResponseDto(accountService.createAccount(accountDto));
-
-        }
-        catch (RuntimeException runtimeException){
-
-            return new ResponseDto(runtimeException.getMessage());
-
-        }
-
-            */
-    }
-
-
-
-    /*
-    @PutMapping("/{id}")
-    public ResponseDto updateAccount(@PathVariable Long id,@RequestBody AccountDto accountDto){
-
-        try{
-            accountService.updateAccount(accountDto,id);
-            return new ResponseDto();
-        }
-
-        catch(RuntimeException runtimeException){
-            return new ResponseDto(runtimeException.getMessage());
-        }
 
     }
-
-     */
 
 
     @PutMapping("/updateMail/{id}")
@@ -74,18 +36,6 @@ public class AccountController {
 
         return ResponseEntity.ok(accountService.updateMail(accountDto, id));
 
-
-
-        /*
-        try{
-            accountService.updateMail(accountDto,id);
-            return new ResponseDto();
-
-        }
-        catch(RuntimeException runtimeException){
-            return new ResponseDto(runtimeException.getMessage());
-        }
-        */
 
     }
 
@@ -95,16 +45,6 @@ public class AccountController {
 
         return ResponseEntity.ok(accountService.updatePassword(accountDto, id));
 
-                /*
-        try {
-            accountService.updatePassword(accountDto, id);
-            return new ResponseDto();
-
-        } catch (RuntimeException runtimeException) {
-            return new ResponseDto(runtimeException.getMessage());
-        }
-
-                 */
 
     }
 

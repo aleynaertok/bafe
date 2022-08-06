@@ -25,7 +25,6 @@ public class LoginController {
         return ResponseEntity.ok(loginService.login(accountDto));
 
 
-
     }
 
 

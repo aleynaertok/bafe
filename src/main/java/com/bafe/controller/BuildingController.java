@@ -22,17 +22,15 @@ public class BuildingController {
     @PostMapping("/{id}")
     public ResponseEntity<BuildingDto> saveBuild(@PathVariable Long id, @RequestBody BuildingDto buildingDto) {
 
-        return ResponseEntity.ok(buildingService.saveBuild(id,buildingDto));
-       /* buildingService.saveBuild(id, buildingDto);
-        return ResponseEntity.ok().build();
-            */
+        return ResponseEntity.ok(buildingService.saveBuild(id, buildingDto));
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<BuildingInformationDto>> getPersonalBuildings(@PathVariable Long id){
 
-       return ResponseEntity.ok(buildingService.getPersonalBuildings(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<List<BuildingInformationDto>> getPersonalBuildings(@PathVariable Long id) {
+
+        return ResponseEntity.ok(buildingService.getPersonalBuildings(id));
 
     }
 
