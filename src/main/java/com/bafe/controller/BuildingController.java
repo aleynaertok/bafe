@@ -26,6 +26,17 @@ public class BuildingController {
 
     }
 
+    @GetMapping()
+    public void helloWorld(){
+
+        System.out.println("hello world");
+
+    }
+
+
+
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<List<BuildingInformationDto>> getPersonalBuildings(@PathVariable Long id) {
