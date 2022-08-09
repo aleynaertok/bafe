@@ -27,9 +27,9 @@ public class BuildingController {
     }
 
     @GetMapping()
-    public void helloWorld(){
+    public String helloWorld(){
 
-        System.out.println("hello world");
+        return "hello world";
 
     }
 
