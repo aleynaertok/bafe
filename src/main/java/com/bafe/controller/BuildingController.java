@@ -26,12 +26,7 @@ public class BuildingController {
 
     }
 
-    @GetMapping()
-    public String helloWorld(){
 
-        return "hello world";
-
-    }
 
 
 
