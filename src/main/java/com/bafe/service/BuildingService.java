@@ -24,7 +24,7 @@ public class BuildingService {
     }
 
 
-    public BuildingDto saveBuild(Long id, BuildingDto buildingDto) {
+    public void saveBuild(Long id, BuildingDto buildingDto) {
         Building building = new Building();
 
         Account account = accountService.getAccountById(id);
@@ -34,7 +34,7 @@ public class BuildingService {
         irregularities(buildingDto);
 
 
-        switch (buildingDto.getBuildingType()){
+        switch (buildingDto.getBuildingType()) {
             case "reinforced":
 
                 reInforcedConcrete(buildingDto);
@@ -42,27 +42,23 @@ public class BuildingService {
 
             case "timberwork":
 
-                    timberWork(buildingDto);
+                timberWork(buildingDto);
                 break;
             case "steelstructure":
 
                 steelStructure(buildingDto);
-            break;
+                break;
 
             case "masonry":
 
                 masonry(buildingDto);
-            break;
+                break;
 
             default:
                 throw new IsEmptyException("Unexpected Value" + buildingDto.getBuildingType());
 
 
-
         }
-
-
-        reInforcedConcrete(buildingDto);
 
 
         building.setFloorNumber(buildingDto.getFloorNumber());
@@ -72,12 +68,12 @@ public class BuildingService {
 
         buildingRepository.save(building);
 
-        return buildingDto;
+
 
 
     }
 
-    public BuildingDto irregularities(BuildingDto buildingDto) {
+    public void irregularities(BuildingDto buildingDto) {
 
 
         buildingDto.setVerticalNumber((int) buildingDto.getVerticalIrregularities().stream().filter(verticalIrregularit -> verticalIrregularit.equals(true)).count());
@@ -85,10 +81,10 @@ public class BuildingService {
         buildingDto.setHorizontalNumber((int) buildingDto.getHorizontalIrregularities().stream().filter(horizontalIrregularit -> horizontalIrregularit.equals(true)).count());
 
 
-        return buildingDto;
+
     }
 
-    public BuildingDto calculateZone(BuildingDto buildingDto) {
+    public void calculateZone(BuildingDto buildingDto) {
 
         if (buildingDto.getAcceleration() < 0.250) {
             buildingDto.setZone("1");
@@ -105,7 +101,7 @@ public class BuildingService {
             buildingDto.setZone("5");
         }
 
-        return buildingDto;
+       
 
     }
 
@@ -125,7 +121,7 @@ public class BuildingService {
     }
 
 
-    public BuildingDto reInforcedConcrete(BuildingDto buildingDto) {
+    public void reInforcedConcrete(BuildingDto buildingDto) {
 
 
         if (buildingDto.getFloorNumber() == 1 || buildingDto.getFloorNumber() == 2) {
@@ -154,7 +150,7 @@ public class BuildingService {
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
 
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 5);
             }
 
@@ -180,10 +176,10 @@ public class BuildingService {
                 default:
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 2);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 10);
             }
 
@@ -215,10 +211,10 @@ public class BuildingService {
 
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 28);
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 3);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 10);
             }
         } else if (buildingDto.getFloorNumber() == 5) {
@@ -245,10 +241,10 @@ public class BuildingService {
 
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 28);
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 3);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 15);
             }
         } else if (buildingDto.getFloorNumber() == 6 || buildingDto.getFloorNumber() == 7) {
@@ -275,10 +271,10 @@ public class BuildingService {
 
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 28);
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 3);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 15);
             }
         }
@@ -289,10 +285,9 @@ public class BuildingService {
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -44) + (buildingDto.getHorizontalNumber() * -32));
 
-        if(buildingDto.getYears() < 2007){
+        if (buildingDto.getYears() < 2007) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 28);
-        }
-        else if(buildingDto.getYears() > 2018){
+        } else if (buildingDto.getYears() > 2018) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 84);
         }
 
@@ -308,12 +303,11 @@ public class BuildingService {
 
 
 
-        return buildingDto;
 
     }
 
 
-    public BuildingDto timberWork(BuildingDto buildingDto) { //Ahşap
+    public void timberWork(BuildingDto buildingDto) { //Ahşap
 
         if (buildingDto.getFloorNumber() == 1 || buildingDto.getFloorNumber() == 2) {
 
@@ -342,7 +336,7 @@ public class BuildingService {
             }
 
 
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 5);
             }
 
@@ -368,10 +362,10 @@ public class BuildingService {
                 default:
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 2);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 10);
             }
         }
@@ -384,10 +378,9 @@ public class BuildingService {
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -48) + (buildingDto.getHorizontalNumber() * -44));
 
-        if(buildingDto.getYears() < 2007){
+        if (buildingDto.getYears() < 2007) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 44);
-        }
-        else if(buildingDto.getYears() > 2018){
+        } else if (buildingDto.getYears() > 2018) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 64);
         }
 
@@ -401,13 +394,13 @@ public class BuildingService {
             buildingDto.setStatus("Risk durumu bulunmamakta bina güvenli.");
         }
 
-        return buildingDto;
+
 
 
     }
 
 
-    public BuildingDto steelStructure(BuildingDto buildingDto) { // çelik
+    public void steelStructure(BuildingDto buildingDto) { // çelik
         if (buildingDto.getFloorNumber() == 1 || buildingDto.getFloorNumber() == 2) {
 
             switch (buildingDto.getZone()) {
@@ -434,7 +427,7 @@ public class BuildingService {
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
 
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 5);
             }
 
@@ -465,10 +458,10 @@ public class BuildingService {
                 default:
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 2);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 10);
             }
 
@@ -501,10 +494,10 @@ public class BuildingService {
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
 
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 3);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 10);
             }
 
@@ -533,16 +526,16 @@ public class BuildingService {
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
 
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 3);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 15);
             }
 
             if (buildingDto.getGround().equals("ZE")) {
 
-                buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - -24);
+                buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 24);
             }
 
         } else if (buildingDto.getFloorNumber() == 6 || buildingDto.getFloorNumber() == 7) {
@@ -566,10 +559,10 @@ public class BuildingService {
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
 
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 3);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 15);
             }
 
@@ -586,10 +579,9 @@ public class BuildingService {
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -40) + (buildingDto.getHorizontalNumber() * -32));
 
-        if(buildingDto.getYears() < 2007){
+        if (buildingDto.getYears() < 2007) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 24);
-        }
-        else if(buildingDto.getYears() > 2018){
+        } else if (buildingDto.getYears() > 2018) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 56);
         }
 
@@ -606,12 +598,9 @@ public class BuildingService {
 
 
 
-
-        return buildingDto;
-
     }
 
-    public BuildingDto masonry(BuildingDto buildingDto) { //Yığma
+    public void masonry(BuildingDto buildingDto) { //Yığma
         if (buildingDto.getFloorNumber() == 1 || buildingDto.getFloorNumber() == 2) {
 
             switch (buildingDto.getZone()) {
@@ -639,7 +628,7 @@ public class BuildingService {
             }
 
 
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 5);
             }
 
@@ -665,10 +654,10 @@ public class BuildingService {
                 default:
                     throw new IsEmptyException("Unexpected value: " + buildingDto.getZone());
             }
-            if (buildingDto.getImpactEffect()) {
+            if (buildingDto.isImpactEffect()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 2);
             }
-            if (buildingDto.getHeavyHits()) {
+            if (buildingDto.isHeavyHits()) {
                 buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 10);
             }
         }
@@ -676,7 +665,7 @@ public class BuildingService {
         if (buildingDto.getGround().equals("ZA") || buildingDto.getGround().equals("ZB")) {
             buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 12);
         } else if (buildingDto.getGround().equals("ZE")) {
-            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() -8);
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 8);
         }
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -28) + (buildingDto.getHorizontalNumber() * -16));
@@ -691,7 +680,7 @@ public class BuildingService {
             buildingDto.setStatus("Risk durumu bulunmamakta bina güvenli.");
         }
 
-        return buildingDto;
+
     }
 
 

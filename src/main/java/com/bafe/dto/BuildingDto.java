@@ -27,8 +27,8 @@ public class BuildingDto extends BaseDto implements Serializable {
     private List<Boolean> verticalIrregularities;
     private List<Boolean> horizontalIrregularities;
     private int verticalNumber;
-    private Boolean impactEffect;
-    private Boolean heavyHits;
+    private boolean impactEffect;
+    private boolean heavyHits;
     private int horizontalNumber;
     private String buildingType;
     private Boolean reinforcedConcrete;
