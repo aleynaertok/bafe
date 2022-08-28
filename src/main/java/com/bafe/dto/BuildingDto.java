@@ -30,6 +30,7 @@ public class BuildingDto extends BaseDto implements Serializable {
     private Boolean impactEffect;
     private Boolean heavyHits;
     private int horizontalNumber;
+    private String buildingType;
     private Boolean reinforcedConcrete;
     private AccountDto accountDto;
 

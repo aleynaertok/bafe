@@ -23,12 +23,17 @@ public class AccountController {
 
 
     @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto) {
+    public ResponseEntity<Void> createAccount(@RequestBody AccountDto accountDto) {
 
-        return ResponseEntity.ok(accountService.createAccount(accountDto));
+        accountService.createAccount(accountDto);
+        return ResponseEntity.ok().build();
+
+
 
 
     }
+
+
 
 
     @PutMapping("/updateMail/{id}")

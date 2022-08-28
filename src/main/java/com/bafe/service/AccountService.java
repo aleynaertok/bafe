@@ -4,6 +4,7 @@ package com.bafe.service;
 import com.bafe.dto.AccountDto;
 import com.bafe.exception.IsEmptyException;
 import com.bafe.model.Account;
+import com.bafe.model.Building;
 import com.bafe.repository.AccountRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,12 @@ public class AccountService {
 
     }
 
-    public AccountDto createAccount(AccountDto accountDto) {
+    public void createAccount(AccountDto accountDto) {
         validateAccount(accountDto);
 
         checkMailExist(accountDto);
+
+
 
         Account account = new Account();
         account.setMail(accountDto.getMail());
@@ -46,8 +49,10 @@ public class AccountService {
         account.setAdmin(false);
         account.setActivity(true);
 
+        accountRepository.save(account);
 
-        return new AccountDto(accountRepository.save(account));
+
+
 
     }
 

@@ -34,7 +34,32 @@ public class BuildingService {
         irregularities(buildingDto);
 
 
+        switch (buildingDto.getBuildingType()){
+            case "reinforced":
 
+                reInforcedConcrete(buildingDto);
+                break;
+
+            case "timberwork":
+
+                    timberWork(buildingDto);
+                break;
+            case "steelstructure":
+
+                steelStructure(buildingDto);
+            break;
+
+            case "masonry":
+
+                masonry(buildingDto);
+            break;
+
+            default:
+                throw new IsEmptyException("Unexpected Value" + buildingDto.getBuildingType());
+
+
+
+        }
 
 
         reInforcedConcrete(buildingDto);
@@ -264,6 +289,13 @@ public class BuildingService {
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -44) + (buildingDto.getHorizontalNumber() * -32));
 
+        if(buildingDto.getYears() < 2007){
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 28);
+        }
+        else if(buildingDto.getYears() > 2018){
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 84);
+        }
+
         if (buildingDto.getBuildingPoint() < 12) {
             buildingDto.setStatus("Risk durumu yüksek!");
         } else if (buildingDto.getBuildingPoint() > 12 && buildingDto.getBuildingPoint() < 28) {
@@ -273,6 +305,8 @@ public class BuildingService {
         } else {
             buildingDto.setStatus("Risk durumu bulunmamakta bina güvenli.");
         }
+
+
 
         return buildingDto;
 
@@ -349,6 +383,13 @@ public class BuildingService {
         }
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -48) + (buildingDto.getHorizontalNumber() * -44));
+
+        if(buildingDto.getYears() < 2007){
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 44);
+        }
+        else if(buildingDto.getYears() > 2018){
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 64);
+        }
 
         if (buildingDto.getBuildingPoint() < 44) {
             buildingDto.setStatus("Risk durumu yüksek!");
@@ -545,6 +586,13 @@ public class BuildingService {
 
         buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -40) + (buildingDto.getHorizontalNumber() * -32));
 
+        if(buildingDto.getYears() < 2007){
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() - 24);
+        }
+        else if(buildingDto.getYears() > 2018){
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 56);
+        }
+
         if (buildingDto.getBuildingPoint() < 20) {
             buildingDto.setStatus("Risk durumu yüksek!");
         } else if (buildingDto.getBuildingPoint() > 20 && buildingDto.getBuildingPoint() < 47) {
@@ -554,6 +602,10 @@ public class BuildingService {
         } else {
             buildingDto.setStatus("Risk durumu bulunmamakta bina güvenli.");
         }
+
+
+
+
 
         return buildingDto;
 
@@ -622,18 +674,18 @@ public class BuildingService {
         }
 
         if (buildingDto.getGround().equals("ZA") || buildingDto.getGround().equals("ZB")) {
-            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 4);
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 12);
         } else if (buildingDto.getGround().equals("ZE")) {
-            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + 8);
+            buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() -8);
         }
 
-        buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -48) + (buildingDto.getHorizontalNumber() * -44));
+        buildingDto.setBuildingPoint(buildingDto.getBuildingPoint() + (buildingDto.getVerticalNumber() * -28) + (buildingDto.getHorizontalNumber() * -16));
 
-        if (buildingDto.getBuildingPoint() < 44) {
+        if (buildingDto.getBuildingPoint() < 8) {
             buildingDto.setStatus("Risk durumu yüksek!");
-        } else if (buildingDto.getBuildingPoint() > 44 && buildingDto.getBuildingPoint() < 103) {
+        } else if (buildingDto.getBuildingPoint() > 8 && buildingDto.getBuildingPoint() < 19) {
             buildingDto.setStatus("Risk durumu orta düzeyde");
-        } else if (buildingDto.getBuildingPoint() > 103 && buildingDto.getBuildingPoint() < 147) {
+        } else if (buildingDto.getBuildingPoint() > 19 && buildingDto.getBuildingPoint() < 27) {
             buildingDto.setStatus("Risk durumu düşük");
         } else {
             buildingDto.setStatus("Risk durumu bulunmamakta bina güvenli.");
