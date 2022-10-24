@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Service
-public class LoginService {
+public class LoginService implements ILoginService{
 
     private final LoginRepository loginRepository;
 

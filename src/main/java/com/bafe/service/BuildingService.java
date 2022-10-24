@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class BuildingService {
+public class BuildingService implements IBuildingService{
     private final BuildingRepository buildingRepository;
     private final AccountService accountService;
 
@@ -23,6 +23,13 @@ public class BuildingService {
 
     }
 
+    public void deleteBuild(Long id){
+
+
+        buildingRepository.deleteById(id);
+
+
+    }
 
     public void saveBuild(Long id, BuildingDto buildingDto) {
         Building building = new Building();
@@ -64,9 +71,12 @@ public class BuildingService {
         building.setFloorNumber(buildingDto.getFloorNumber());
         building.setName(buildingDto.getName());
         building.setStatus(buildingDto.getStatus());
+        building.setBuildingPoint(buildingDto.getBuildingPoint());
         building.setAccount(account);
 
+
         buildingRepository.save(building);
+
 
 
 
@@ -87,18 +97,18 @@ public class BuildingService {
     public void calculateZone(BuildingDto buildingDto) {
 
         if (buildingDto.getAcceleration() < 0.250) {
-            buildingDto.setZone("1");
+            buildingDto.setZone("5");
 
         } else if (0.250 <= buildingDto.getAcceleration() && buildingDto.getAcceleration() < 0.500) {
 
-            buildingDto.setZone("2");
+            buildingDto.setZone("4");
 
         } else if (0.500 <= buildingDto.getAcceleration() && buildingDto.getAcceleration() < 1000) {
             buildingDto.setZone("3");
         } else if (1100 <= buildingDto.getAcceleration() && buildingDto.getAcceleration() < 1500) {
-            buildingDto.setZone("4");
+            buildingDto.setZone("2");
         } else {
-            buildingDto.setZone("5");
+            buildingDto.setZone("1");
         }
 
        
@@ -115,7 +125,9 @@ public class BuildingService {
         if (buildingsByAccount.isEmpty()) {
             throw new IsEmptyException("Bu kullanıcıya ait bina bulunamadı");
         }
-        return buildingsByAccount.stream().map((BuildingInformationDto::new)).collect(Collectors.toList());
+        return buildingsByAccount.stream().map(BuildingInformationDto::new).collect(Collectors.toList());
+
+
 
 
     }

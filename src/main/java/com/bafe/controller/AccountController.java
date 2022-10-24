@@ -1,7 +1,7 @@
 package com.bafe.controller;
 
 import com.bafe.dto.AccountDto;
-import com.bafe.service.AccountService;
+import com.bafe.service.IAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class AccountController {
 
-    //Post bir şeyleri body ile çağırmak için ya da create işlemleri.
-    //Put güncelleme işlemleri için.
-    //Deletemapping direkt delete işlemleri.
-    //Getmapping veri almak için
 
-    private final AccountService accountService;
+    private final IAccountService accountService;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(IAccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -29,17 +25,15 @@ public class AccountController {
         return ResponseEntity.ok().build();
 
 
-
-
     }
 
 
-
-
     @PutMapping("/updateMail/{id}")
-    public ResponseEntity<AccountDto> updateMail(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+    public ResponseEntity<Void> updateMail(@PathVariable Long id, @RequestBody AccountDto accountDto) {
 
-        return ResponseEntity.ok(accountService.updateMail(accountDto, id));
+        accountService.updateMail(accountDto, id);
+
+        return ResponseEntity.ok().build();
 
 
     }

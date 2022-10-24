@@ -16,6 +16,7 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
 
 
     List<Building> findBuildingsByAccount(Account account);
+
 /*
     @Query("select b.status  from Building b " +
             "where b.account.id = :id and b.floorNumber = :floorNumber")

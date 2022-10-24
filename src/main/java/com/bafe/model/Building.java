@@ -19,6 +19,9 @@ public class Building extends BaseEntity{
     private int floorNumber;
     private String status;
 
+    @Column(name = "building_point")
+    private int buildingPoint;
+
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;

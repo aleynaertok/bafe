@@ -17,6 +17,8 @@ public class AccountDto extends BaseDto {
     private String mail;
 
 
+
+
     public AccountDto(Account account) {
         super(account.getId());
         this.password = account.getPassword();

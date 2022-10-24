@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AccountService {
+public class AccountService implements IAccountService{
 
     private final AccountRepository accountRepository;
 
@@ -22,24 +22,10 @@ public class AccountService {
 
     }
 
-    public void validateAccount(AccountDto accountDto) {
-
-        //StringUtils pom.xml ekle
-
-
-        if (StringUtils.isEmpty(accountDto.getMail())) {
-
-            throw new IsEmptyException("Mail uygun değildir.");
-        }
-
-
-    }
 
     public void createAccount(AccountDto accountDto) {
-        validateAccount(accountDto);
 
         checkMailExist(accountDto);
-
 
 
         Account account = new Account();
@@ -51,24 +37,22 @@ public class AccountService {
         accountRepository.save(account);
 
 
-
-
     }
 
-    private void checkMailExist(AccountDto accountDto) {
+    public void checkMailExist(AccountDto accountDto) {
         Optional<Account> accountOptional = accountRepository.findAccountByMail(accountDto.getMail());
         if (accountOptional.isPresent()) {
             throw new IsEmptyException("Bu mail zaten kayıtlı.");
         }
     }
 
-    public AccountDto updateMail(AccountDto accountDto, Long id) {
+    public void updateMail(AccountDto accountDto, Long id) {
 
         Account account = getAccountById(id);
         account.setMail(accountDto.getMail());
 
 
-        return new AccountDto(accountRepository.save(account));
+        accountRepository.save(account);
     }
 
     public AccountDto updatePassword(AccountDto accountDto, Long id) {
@@ -94,19 +78,6 @@ public class AccountService {
     public Account getAccountById(Long id) {
 
         return accountRepository.findById(id).orElseThrow(() -> new IsEmptyException("Kullanıcı bulunamadı."));
-
-
-       /* Optional<Account> accountOptional = accountRepository.findById(id);
-
-
-        if (accountOptional.isPresent()) {
-            return accountOptional.get();
-
-        } else {
-            throw new IsEmptyException("Kullanıcı bulunamadı.");
-        }
-
-        */
 
 
     }
